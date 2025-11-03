@@ -780,7 +780,7 @@ class PdfViewerParams {
     'Use panAxis instead. '
     'This feature was deprecated after flutter sdk v3.3.0-0.5.pre.',
   )
-  final bool alignPanAxis;
+  bool get alignPanAxis => panAxis == PanAxis.aligned;
 
   /// See [InteractiveViewer] for more info.
   final EdgeInsets boundaryMargin;
@@ -839,8 +839,12 @@ class PdfViewerParams {
       this.buildPageOverlay,
       this.pageDecoration,
       this.scrollDirection = Axis.vertical,
-      this.panAxis = PanAxis.free,
-      this.alignPanAxis = false,
+      PanAxis panAxis = PanAxis.free,
+      @Deprecated(
+        'Use panAxis instead. '
+        'This feature was deprecated after flutter sdk v3.3.0-0.5.pre.',
+      )
+      bool? alignPanAxis,
       this.boundaryMargin = EdgeInsets.zero,
       this.maxScale = 20,
       this.minScale = 0.1,
@@ -853,7 +857,8 @@ class PdfViewerParams {
       this.onViewerControllerInitialized,
       this.scrollByMouseWheel = 0.1,
       this.interactionEndFrictionCoefficient = 0.0000135,
-      this.onClickOutSidePageViewer});
+      this.onClickOutSidePageViewer})
+      : panAxis = alignPanAxis == true ? PanAxis.aligned : panAxis;
 
   PdfViewerParams copyWith({
     int? pageNumber,
@@ -864,6 +869,10 @@ class PdfViewerParams {
     BoxDecoration? pageDecoration,
     Axis? scrollDirection,
     PanAxis? panAxis,
+    @Deprecated(
+      'Use panAxis instead. '
+      'This feature was deprecated after flutter sdk v3.3.0-0.5.pre.',
+    )
     bool? alignPanAxis,
     EdgeInsets? boundaryMargin,
     bool? panEnabled,
@@ -876,30 +885,35 @@ class PdfViewerParams {
     OnPdfViewerControllerInitialized? onViewerControllerInitialized,
     double? scrollByMouseWheel,
     OnClickOutsidePageViewer? onClickOutSidePageViewer,
-  }) =>
-      PdfViewerParams(
-        pageNumber: pageNumber ?? this.pageNumber,
-        padding: padding ?? this.padding,
-        layoutPages: layoutPages ?? this.layoutPages,
-        buildPagePlaceholder: buildPagePlaceholder ?? this.buildPagePlaceholder,
-        buildPageOverlay: buildPageOverlay ?? this.buildPageOverlay,
-        pageDecoration: pageDecoration ?? this.pageDecoration,
-        scrollDirection: scrollDirection ?? this.scrollDirection,
-        panAxis: panAxis ?? this.panAxis,
-        alignPanAxis: alignPanAxis ?? this.alignPanAxis,
-        boundaryMargin: boundaryMargin ?? this.boundaryMargin,
-        panEnabled: panEnabled ?? this.panEnabled,
-        scaleEnabled: scaleEnabled ?? this.scaleEnabled,
-        maxScale: maxScale ?? this.maxScale,
-        minScale: minScale ?? this.minScale,
-        onInteractionEnd: onInteractionEnd ?? this.onInteractionEnd,
-        onInteractionStart: onInteractionStart ?? this.onInteractionStart,
-        onInteractionUpdate: onInteractionUpdate ?? this.onInteractionUpdate,
-        onViewerControllerInitialized:
-            onViewerControllerInitialized ?? this.onViewerControllerInitialized,
-        scrollByMouseWheel: scrollByMouseWheel ?? this.scrollByMouseWheel,
-        onClickOutSidePageViewer: onClickOutSidePageViewer ?? this.onClickOutSidePageViewer,
-      );
+  }) {
+    final resolvedPanAxis = panAxis ??
+        (alignPanAxis == null
+            ? this.panAxis
+            : (alignPanAxis ? PanAxis.aligned : this.panAxis));
+
+    return PdfViewerParams(
+      pageNumber: pageNumber ?? this.pageNumber,
+      padding: padding ?? this.padding,
+      layoutPages: layoutPages ?? this.layoutPages,
+      buildPagePlaceholder: buildPagePlaceholder ?? this.buildPagePlaceholder,
+      buildPageOverlay: buildPageOverlay ?? this.buildPageOverlay,
+      pageDecoration: pageDecoration ?? this.pageDecoration,
+      scrollDirection: scrollDirection ?? this.scrollDirection,
+      panAxis: resolvedPanAxis,
+      boundaryMargin: boundaryMargin ?? this.boundaryMargin,
+      panEnabled: panEnabled ?? this.panEnabled,
+      scaleEnabled: scaleEnabled ?? this.scaleEnabled,
+      maxScale: maxScale ?? this.maxScale,
+      minScale: minScale ?? this.minScale,
+      onInteractionEnd: onInteractionEnd ?? this.onInteractionEnd,
+      onInteractionStart: onInteractionStart ?? this.onInteractionStart,
+      onInteractionUpdate: onInteractionUpdate ?? this.onInteractionUpdate,
+      onViewerControllerInitialized:
+          onViewerControllerInitialized ?? this.onViewerControllerInitialized,
+      scrollByMouseWheel: scrollByMouseWheel ?? this.scrollByMouseWheel,
+      onClickOutSidePageViewer: onClickOutSidePageViewer ?? this.onClickOutSidePageViewer,
+    );
+  }
 
   @override
   bool operator ==(Object other) {
@@ -914,7 +928,6 @@ class PdfViewerParams {
         other.pageDecoration == pageDecoration &&
         other.scrollDirection == scrollDirection &&
         other.panAxis == panAxis &&
-        other.alignPanAxis == alignPanAxis &&
         other.boundaryMargin == boundaryMargin &&
         other.panEnabled == panEnabled &&
         other.scaleEnabled == scaleEnabled &&
@@ -938,7 +951,6 @@ class PdfViewerParams {
         pageDecoration.hashCode ^
         scrollDirection.hashCode ^
         panAxis.hashCode ^
-        alignPanAxis.hashCode ^
         boundaryMargin.hashCode ^
         panEnabled.hashCode ^
         scaleEnabled.hashCode ^
