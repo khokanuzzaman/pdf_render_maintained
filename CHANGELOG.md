@@ -1,3 +1,9 @@
+## 1.5.4 (Maintained Fork)
+
+- ✅ **Deprecation Fix**: Converted `alignPanAxis` from field to computed getter
+- ✅ **Constructor Update**: Updated `PdfViewerParams` constructor to handle `alignPanAxis` deprecation
+- ✅ **copyWith Fix**: Fixed `copyWith` method to properly handle `panAxis` and deprecated `alignPanAxis`
+
 ## 1.5.3 (Maintained Fork)
 
 - ✅ **Swift Package Manager Support**: Added SPM support for macOS
