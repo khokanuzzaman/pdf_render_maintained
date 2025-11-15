@@ -1,7 +1,7 @@
-import 'dart:js_util';
 import 'dart:typed_data';
 
 import '../wrappers/html.dart';
+import '../wrappers/js_util.dart' as js_util;
 
 external _PDFDocumentLoadingTask _pdfjsGetDocument(dynamic data);
 
@@ -13,10 +13,10 @@ class _PDFDocumentLoadingTask {
 
 Map<String, dynamic> _getParams(Map<String, dynamic> jsParams) {
   final params = {
-    'cMapUrl': getProperty(_pdfRenderOptions, 'cMapUrl'),
-    'cMapPacked': getProperty(_pdfRenderOptions, 'cMapPacked'),
+    'cMapUrl': js_util.getProperty(_pdfRenderOptions, 'cMapUrl'),
+    'cMapPacked': js_util.getProperty(_pdfRenderOptions, 'cMapPacked'),
   }..addAll(jsParams);
-  final otherParams = getProperty(_pdfRenderOptions, 'params');
+  final otherParams = js_util.getProperty(_pdfRenderOptions, 'params');
   if (otherParams != null) {
     params.addAll(otherParams as Map<String, dynamic>);
   }
@@ -24,8 +24,8 @@ Map<String, dynamic> _getParams(Map<String, dynamic> jsParams) {
 }
 
 Future<PdfjsDocument> _pdfjsGetDocumentJsParams(Map<String, dynamic> jsParams) {
-  return promiseToFuture<PdfjsDocument>(
-      _pdfjsGetDocument(jsify(_getParams(jsParams))).promise);
+  return js_util.promiseToFuture<PdfjsDocument>(
+      _pdfjsGetDocument(js_util.jsify(_getParams(jsParams))).promise);
 }
 
 Future<PdfjsDocument> pdfjsGetDocument(String url) =>
