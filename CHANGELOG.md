@@ -1,3 +1,11 @@
+## 1.5.5 (Maintained Fork)
+
+- ✅ **Windows and Linux Platform Support**: Added platform declarations and C++ plugin implementations for Windows and Linux
+- ✅ **WASM Compatibility**: Fixed WASM compatibility by adding `dart:js_interop` support with proper conditional exports
+- ✅ **Downgrade Analysis Fix**: Added stub implementations to ensure compatibility with dependency constraint lower bounds
+- ✅ **Conditional Exports**: Improved conditional export structure for proper WASM/non-WASM web handling
+- ✅ **Platform Coverage**: Updated description to include Windows and Linux platforms
+
 ## 1.5.4 (Maintained Fork)
 
 - ✅ **Deprecation Fix**: Converted `alignPanAxis` from field to computed getter
