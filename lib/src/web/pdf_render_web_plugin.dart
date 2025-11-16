@@ -9,6 +9,17 @@ import '../wrappers/html.dart' as html;
 import '../wrappers/js_util.dart' as js_util;
 import 'pdf.js.dart';
 
+bool _isPdfJsReady() {
+  // Guard to detect missing pdf.js script/config early on web.
+  try {
+    final lib = js_util.getProperty<Object?>(html.window, 'pdfjsLib');
+    final opts = js_util.getProperty<Object?>(html.window, 'pdfRenderOptions');
+    return lib != null && opts != null;
+  } catch (_) {
+    return false;
+  }
+}
+
 class PdfRenderWebPlugin {
   static void registerWith(Registrar registrar) {
     final channel =
@@ -38,21 +49,45 @@ class PdfRenderWebPlugin {
     switch (call.method) {
       case 'file':
         {
-          final doc = await pdfjsGetDocument(call.arguments as String);
-          return _setDoc(doc);
+          try {
+            if (!_isPdfJsReady()) {
+              throw Exception('pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
+            }
+            final doc = await pdfjsGetDocument(call.arguments as String);
+            return _setDoc(doc);
+          } catch (e, st) {
+            _logError('file', e, st);
+            rethrow;
+          }
         }
       case 'asset':
         {
           final assetPath = call.arguments as String;
-          final bytes = await rootBundle.load(assetPath);
-          final doc = await pdfjsGetDocumentFromData(bytes.buffer);
-          return _setDoc(doc);
+          try {
+            if (!_isPdfJsReady()) {
+              throw Exception('pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
+            }
+            final bytes = await rootBundle.load(assetPath);
+            final doc = await pdfjsGetDocumentFromData(bytes.buffer);
+            return _setDoc(doc);
+          } catch (e, st) {
+            _logError('asset:$assetPath', e, st);
+            rethrow;
+          }
         }
       case 'data':
         {
-          final doc = await pdfjsGetDocumentFromData(
-              (call.arguments as Uint8List).buffer);
-          return _setDoc(doc);
+          try {
+            if (!_isPdfJsReady()) {
+              throw Exception('pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
+            }
+            final doc = await pdfjsGetDocumentFromData(
+                (call.arguments as Uint8List).buffer);
+            return _setDoc(doc);
+          } catch (e, st) {
+            _logError('data', e, st);
+            rethrow;
+          }
         }
       case 'close':
         _docs.remove(call.arguments as int)?.destroy();
@@ -79,6 +114,12 @@ class PdfRenderWebPlugin {
   dynamic _setDoc(PdfjsDocument doc) {
     _docs[++_lastDocId] = doc;
     return _getDoc(_lastDocId);
+  }
+
+  void _logError(String stage, Object error, StackTrace st) {
+    // Log errors to the JS console to make web failures visible.
+    // ignore: avoid_print
+    print('[pdf_render_web] $stage error: $error\n$st');
   }
 
   dynamic _getDoc(int id) {
@@ -109,7 +150,8 @@ class PdfRenderWebPlugin {
         'width': vp1.width,
         'height': vp1.height,
       };
-    } catch (e) {
+    } catch (e, st) {
+      _logError('openPage', e, st);
       return null;
     }
   }
@@ -155,7 +197,7 @@ class PdfRenderWebPlugin {
   Future<void> _releaseBuffer(dynamic args) async =>
       unpinBufferByFakeAddress(args as int);
 
-  Future<T> _renderRaw<T>(
+  Future<T?> _renderRaw<T>(
     dynamic args, {
     required bool dontFlip,
     required FutureOr<T> Function(
@@ -170,78 +212,83 @@ class PdfRenderWebPlugin {
       double pageHeight,
     ) handleRawData,
   }) async {
-    final docId = args['docId'] as int;
-    final doc = _docs[docId];
-    if (doc == null) {
-      throw Exception('PDF document is not loaded.');
+    try {
+      final docId = args['docId'] as int;
+      final doc = _docs[docId];
+      if (doc == null) {
+        throw Exception('PDF document is not loaded.');
+      }
+      final pageNumber = args['pageNumber'] as int;
+      if (pageNumber < 1 || pageNumber > doc.numPages) {
+        throw RangeError.range(pageNumber, 1, doc.numPages, 'pageNumber');
+      }
+      final page =
+          await js_util.promiseToFuture<PdfjsPage>(doc.getPage(pageNumber));
+
+      final vp1 = page.getViewport(PdfjsViewportParams(scale: 1));
+      final pageWidth = vp1.width;
+      final pageHeight = vp1.height;
+      final fullWidth = args['fullWidth'] as double? ?? pageWidth;
+      final fullHeight = args['fullHeight'] as double? ?? pageHeight;
+      final width = args['width'] as int? ?? fullWidth.toInt();
+      final height = args['height'] as int? ?? fullHeight.toInt();
+      final backgroundFill = args['backgroundFill'] as bool? ?? true;
+      if (width <= 0 || height <= 0) {
+        throw Exception(
+            'Invalid PDF page rendering rectangle ($width x $height)');
+      }
+
+      final x = args['srcX'] as int? ?? args['x'] as int? ?? 0;
+      final y = args['srcY'] as int? ?? args['y'] as int? ?? 0;
+
+      final vp = page.getViewport(PdfjsViewportParams(
+          scale: fullWidth / pageWidth,
+          offsetX: -x.toDouble(),
+          offsetY: -y.toDouble(),
+          dontFlip: dontFlip));
+
+      final canvas = html.document.createElement('canvas') as html.CanvasElement;
+      canvas.width = width;
+      canvas.height = height;
+
+      if (backgroundFill) {
+        canvas.context2D.fillStyle = 'white';
+        canvas.context2D.fillRect(0, 0, width, height);
+      }
+
+      await js_util.promiseToFuture(page
+          .render(
+            PdfjsRenderContext(
+              canvasContext: canvas.context2D,
+              viewport: vp,
+            ),
+          )
+          .promise);
+
+      final src = canvas.context2D
+          .getImageData(0, 0, width, height)
+          .data
+          .buffer
+          .asUint8List();
+      return await handleRawData(
+        src,
+        x,
+        y,
+        width,
+        height,
+        fullWidth,
+        fullHeight,
+        pageWidth,
+        pageHeight,
+      );
+    } catch (e, st) {
+      _logError('render', e, st);
+      return null;
     }
-    final pageNumber = args['pageNumber'] as int;
-    if (pageNumber < 1 || pageNumber > doc.numPages) {
-      throw RangeError.range(pageNumber, 1, doc.numPages, 'pageNumber');
-    }
-    final page =
-        await js_util.promiseToFuture<PdfjsPage>(doc.getPage(pageNumber));
-
-    final vp1 = page.getViewport(PdfjsViewportParams(scale: 1));
-    final pageWidth = vp1.width;
-    final pageHeight = vp1.height;
-    final fullWidth = args['fullWidth'] as double? ?? pageWidth;
-    final fullHeight = args['fullHeight'] as double? ?? pageHeight;
-    final width = args['width'] as int? ?? fullWidth.toInt();
-    final height = args['height'] as int? ?? fullHeight.toInt();
-    final backgroundFill = args['backgroundFill'] as bool? ?? true;
-    if (width <= 0 || height <= 0) {
-      throw Exception(
-          'Invalid PDF page rendering rectangle ($width x $height)');
-    }
-
-    final x = args['srcX'] as int? ?? args['x'] as int? ?? 0;
-    final y = args['srcY'] as int? ?? args['y'] as int? ?? 0;
-
-    final vp = page.getViewport(PdfjsViewportParams(
-        scale: fullWidth / pageWidth,
-        offsetX: -x.toDouble(),
-        offsetY: -y.toDouble(),
-        dontFlip: dontFlip));
-
-    final canvas = html.document.createElement('canvas') as html.CanvasElement;
-    canvas.width = width;
-    canvas.height = height;
-
-    if (backgroundFill) {
-      canvas.context2D.fillStyle = 'white';
-      canvas.context2D.fillRect(0, 0, width, height);
-    }
-
-    await js_util.promiseToFuture(page
-        .render(
-          PdfjsRenderContext(
-            canvasContext: canvas.context2D,
-            viewport: vp,
-          ),
-        )
-        .promise);
-
-    final src = canvas.context2D
-        .getImageData(0, 0, width, height)
-        .data
-        .buffer
-        .asUint8List();
-    return await handleRawData(
-      src,
-      x,
-      y,
-      width,
-      height,
-      fullWidth,
-      fullHeight,
-      pageWidth,
-      pageHeight,
-    );
   }
 
   Future<int> _updateTex(dynamic args) async {
-    return await _renderRaw(
+    final result = await _renderRaw<int>(
       args,
       dontFlip: false,
       handleRawData: (
@@ -266,6 +313,10 @@ class PdfRenderWebPlugin {
         return 0;
       },
     );
+    if (result == null) {
+      throw Exception('Texture update failed; see earlier logs for details.');
+    }
+    return result;
   }
 
   static Future<ui.Image> create(Uint8List data, int width, int height) async {

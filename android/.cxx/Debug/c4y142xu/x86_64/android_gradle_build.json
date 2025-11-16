@@ -1,0 +1,38 @@
+{
+  "buildFiles": [
+    "/Users/khokan/Desktop/npm packages/pdf_render_maintained/android/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/khokan/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/khokan/Desktop/npm packages/pdf_render_maintained/android/.cxx/Debug/c4y142xu/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/khokan/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/khokan/Desktop/npm packages/pdf_render_maintained/android/.cxx/Debug/c4y142xu/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "bbhelper::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "x86_64",
+      "artifactName": "bbhelper",
+      "output": "/Users/khokan/Desktop/npm packages/pdf_render_maintained/example/build/pdf_render_maintained/intermediates/cxx/Debug/c4y142xu/obj/x86_64/libbbhelper.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/khokan/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/khokan/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

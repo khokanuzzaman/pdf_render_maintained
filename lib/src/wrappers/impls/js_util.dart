@@ -1,1 +1,1 @@
-export 'dart:js_util' if (dart.library.js) '../js_util_stub.dart';
+export './js_util_web.dart' if (dart.library.html) 'dart:js_util' else './js_util_stub.dart';

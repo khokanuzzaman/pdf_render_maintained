@@ -22,3 +22,12 @@ Object jsify(Object object) {
   throw UnsupportedError('dart:js_util is not available on this platform');
 }
 
+/// Stub implementation - should never be called
+bool hasProperty(Object object, Object name) {
+  throw UnsupportedError('dart:js_util is not available on this platform');
+}
+
+/// Stub implementation - should never be called
+Object get globalThis => throw UnsupportedError(
+    'dart:js_util is not available on this platform');
+

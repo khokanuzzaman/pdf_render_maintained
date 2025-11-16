@@ -1,3 +1,8 @@
+## 1.5.6 (Maintained Fork)
+
+- ✅ **WASM Compatibility Improvements**: Added `package:web` dependency and WASM-compatible HTML wrapper implementation
+- ✅ **Enhanced WASM Detection**: Improved conditional exports to use `package:web` for WASM builds
+
 ## 1.5.5 (Maintained Fork)
 
 - ✅ **Windows and Linux Platform Support**: Added platform declarations and C++ plugin implementations for Windows and Linux

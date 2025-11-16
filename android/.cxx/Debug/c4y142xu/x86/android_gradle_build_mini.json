@@ -1,0 +1,27 @@
+{
+  "buildFiles": [
+    "/Users/khokan/Desktop/npm packages/pdf_render_maintained/android/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/khokan/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/khokan/Desktop/npm packages/pdf_render_maintained/android/.cxx/Debug/c4y142xu/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/khokan/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/khokan/Desktop/npm packages/pdf_render_maintained/android/.cxx/Debug/c4y142xu/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "bbhelper::@6890427a1f51a3e7e1df": {
+      "artifactName": "bbhelper",
+      "abi": "x86",
+      "output": "/Users/khokan/Desktop/npm packages/pdf_render_maintained/example/build/pdf_render_maintained/intermediates/cxx/Debug/c4y142xu/obj/x86/libbbhelper.so",
+      "runtimeFiles": []
+    }
+  }
+}
