@@ -13,7 +13,7 @@ class Pointer<T> {
   Uint8List get buffer => getBufferByFakeAddress(address);
 }
 
-/// Get buffer for Pointer<Uint8>.
+/// Get buffer for `Pointer<Uint8>`.
 extension Uint8Pointer on Pointer<Uint8> {
   Uint8List asTypedList(int length) => buffer;
 }

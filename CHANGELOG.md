@@ -1,3 +1,7 @@
+## 1.5.8 (Maintained Fork)
+
+- ✅ **Publish prep**: Version bump and final adjustments for pub.dev release
+
 ## 1.5.7 (Maintained Fork)
 
 - ✅ **WASM-safe bindings**: Rewrote pdf.js interop to use `dart:js_util` helpers and platform-aware wrappers for wasm detection
