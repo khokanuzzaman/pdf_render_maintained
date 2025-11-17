@@ -1,3 +1,7 @@
+## 1.5.10 (Maintained Fork)
+
+- ✅ **Doc & release bump**: Updated docs and package version for publishing
+
 ## 1.5.9 (Maintained Fork)
 
 - ✅ **Doc refresh**: README/PUBLISHING_GUIDE updates and final publish prep

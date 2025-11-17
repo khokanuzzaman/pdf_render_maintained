@@ -289,7 +289,10 @@ class PdfPageView extends StatefulWidget {
   final PdfPageBuilder? pageBuilder;
 
   const PdfPageView(
-      {super.key, this.pdfDocument, required this.pageNumber, this.pageBuilder});
+      {super.key,
+      this.pdfDocument,
+      required this.pageNumber,
+      this.pageBuilder});
 
   @override
   PdfPageViewState createState() => PdfPageViewState();
@@ -911,7 +914,8 @@ class PdfViewerParams {
       onViewerControllerInitialized:
           onViewerControllerInitialized ?? this.onViewerControllerInitialized,
       scrollByMouseWheel: scrollByMouseWheel ?? this.scrollByMouseWheel,
-      onClickOutSidePageViewer: onClickOutSidePageViewer ?? this.onClickOutSidePageViewer,
+      onClickOutSidePageViewer:
+          onClickOutSidePageViewer ?? this.onClickOutSidePageViewer,
     );
   }
 
@@ -1241,9 +1245,8 @@ class PdfViewerState extends State<PdfViewer>
           transformationController: _controller,
           constrained: false,
           panAxis: widget.params?.panAxis ?? PanAxis.free,
-          onWheelDelta: widget.params?.scrollByMouseWheel != null
-              ? _onWheelDelta
-              : null,
+          onWheelDelta:
+              widget.params?.scrollByMouseWheel != null ? _onWheelDelta : null,
           boundaryMargin: widget.params?.boundaryMargin ?? EdgeInsets.zero,
           minScale: widget.params?.minScale ?? 0.8,
           maxScale: widget.params?.maxScale ?? 2.5,

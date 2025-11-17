@@ -121,8 +121,10 @@ class PdfjsViewport {
   PdfjsViewport(this._obj);
   final Object _obj;
 
-  double get width => (js_util.getProperty<Object?>(_obj, 'width') as num?)?.toDouble() ?? 0;
-  double get height => (js_util.getProperty<Object?>(_obj, 'height') as num?)?.toDouble() ?? 0;
+  double get width =>
+      (js_util.getProperty<Object?>(_obj, 'width') as num?)?.toDouble() ?? 0;
+  double get height =>
+      (js_util.getProperty<Object?>(_obj, 'height') as num?)?.toDouble() ?? 0;
 
   List<double>? get transform {
     final raw = js_util.getProperty<Object?>(_obj, 'transform');

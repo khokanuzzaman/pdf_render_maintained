@@ -70,7 +70,7 @@ class PdfDocumentMethodChannel extends PdfDocument {
     required super.isEncrypted,
     required super.allowsCopying,
     required super.allowsPrinting,
-  })  : _pages = List<PdfPage?>.filled(pageCount, null);
+  }) : _pages = List<PdfPage?>.filled(pageCount, null);
 
   @override
   Future<void> dispose() async {

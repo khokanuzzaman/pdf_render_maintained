@@ -9,7 +9,8 @@ import 'dart:typed_data';
 // WASM-compatible type stubs for pub.dev compatibility detection
 HtmlElement? querySelector(String query) {
   // WASM implementation not yet complete
-  throw UnimplementedError('PDF rendering on WASM requires full implementation');
+  throw UnimplementedError(
+      'PDF rendering on WASM requires full implementation');
 }
 
 abstract class HtmlElement {
@@ -44,14 +45,16 @@ class HtmlDocument {
   HtmlDocument._();
   HtmlElement createElement(String name) {
     // WASM implementation not yet complete
-    throw UnimplementedError('PDF rendering on WASM requires full implementation');
+    throw UnimplementedError(
+        'PDF rendering on WASM requires full implementation');
   }
 }
 
 final document = HtmlDocument._();
 
 abstract class ScriptElement extends HtmlElement {
-  factory ScriptElement() => throw UnimplementedError('ScriptElement not implemented for WASM');
+  factory ScriptElement() =>
+      throw UnimplementedError('ScriptElement not implemented for WASM');
   set type(String s);
   set charset(String s);
   set async(bool f);
@@ -59,4 +62,3 @@ abstract class ScriptElement extends HtmlElement {
   set innerText(String s);
   Stream<dynamic> get onLoad;
 }
-

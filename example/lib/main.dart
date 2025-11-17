@@ -10,13 +10,13 @@ import 'package:pdf_render_maintained/pdf_render_widgets.dart';
 void main(List<String> args) => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   final controller = PdfViewerController();
   TapDownDetails? _doubleTapDetails;
 

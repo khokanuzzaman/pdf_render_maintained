@@ -51,7 +51,8 @@ class PdfRenderWebPlugin {
         {
           try {
             if (!_isPdfJsReady()) {
-              throw Exception('pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
+              throw Exception(
+                  'pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
             }
             final doc = await pdfjsGetDocument(call.arguments as String);
             return _setDoc(doc);
@@ -65,7 +66,8 @@ class PdfRenderWebPlugin {
           final assetPath = call.arguments as String;
           try {
             if (!_isPdfJsReady()) {
-              throw Exception('pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
+              throw Exception(
+                  'pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
             }
             final bytes = await rootBundle.load(assetPath);
             final doc = await pdfjsGetDocumentFromData(bytes.buffer);
@@ -79,7 +81,8 @@ class PdfRenderWebPlugin {
         {
           try {
             if (!_isPdfJsReady()) {
-              throw Exception('pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
+              throw Exception(
+                  'pdfjsLib/pdfRenderOptions not found. Ensure scripts are included before main.dart.js.');
             }
             final doc = await pdfjsGetDocumentFromData(
                 (call.arguments as Uint8List).buffer);
@@ -247,7 +250,8 @@ class PdfRenderWebPlugin {
           offsetY: -y.toDouble(),
           dontFlip: dontFlip));
 
-      final canvas = html.document.createElement('canvas') as html.CanvasElement;
+      final canvas =
+          html.document.createElement('canvas') as html.CanvasElement;
       canvas.width = width;
       canvas.height = height;
 

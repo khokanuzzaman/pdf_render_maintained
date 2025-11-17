@@ -16,7 +16,7 @@ void main() {
 
     // Verify that the app bar title is displayed.
     expect(find.text('Page -'), findsOneWidget);
-    
+
     // Verify that the PDF viewer is present.
     expect(find.byType(MaterialApp), findsOneWidget);
   });

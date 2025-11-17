@@ -44,7 +44,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  pdf_render_maintained: ^1.5.8
+  pdf_render_maintained: ^1.5.10
 ```
 
 Then run `flutter pub get`.
@@ -191,7 +191,7 @@ And update your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  pdf_render_maintained: ^1.5.3  # Instead of pdf_render: ^1.4.12
+  pdf_render_maintained: ^1.5.10  # Instead of pdf_render: ^1.4.12
 ```
 
 ## Contributing

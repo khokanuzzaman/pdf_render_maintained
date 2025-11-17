@@ -246,7 +246,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.5.8"
+    version: "1.5.10"
   platform:
     dependency: transitive
     description:
