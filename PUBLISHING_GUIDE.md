@@ -6,9 +6,9 @@ This guide covers the complete process of publishing the `pdf_render_maintained`
 
 ### ✅ Package Quality
 - [x] All linting errors fixed
-- [x] All platforms build successfully (iOS, Android, macOS, Web)
+- [x] All platforms build successfully (iOS, Android, macOS, Web, Windows, Linux)
 - [x] Dependencies updated to latest versions
-- [x] WASM compatibility implemented
+- [x] WASM/JS-interop compatibility implemented
 - [x] Real device testing completed (Pixel 6a)
 - [x] Documentation updated and comprehensive
 
@@ -71,8 +71,8 @@ After publishing, verify:
 
 ### Package Details
 - **Name**: `pdf_render_maintained`
-- **Version**: `1.5.1`
-- **Description**: A maintained fork of pdf_render plugin providing PDF rendering APIs and Flutter widgets for iOS, Android, macOS, and Web.
+- **Version**: `1.5.8`
+- **Description**: A maintained fork of pdf_render plugin providing PDF rendering APIs and Flutter widgets for iOS, Android, macOS, Web, Windows, and Linux.
 - **Homepage**: https://github.com/khokanuzzman/pdf_render_maintained
 - **Repository**: https://github.com/khokanuzzman/pdf_render_maintained
 - **Issue Tracker**: https://github.com/khokanuzzman/pdf_render_maintained/issues
@@ -90,6 +90,7 @@ After publishing, verify:
 - `flutter_web_plugins: sdk: flutter`
 - `plugin_platform_interface: ^2.1.8`
 - `vector_math: ^2.2.0`
+- `web: ^1.1.1`
 
 ### Dev Dependencies
 - `flutter_lints: ^6.0.0`
@@ -99,11 +100,11 @@ After publishing, verify:
 
 ### ✅ Fully Supported
 - **Android**: ✅ Tested on Pixel 6a, Gradle 8.11.1
-- **iOS**: ✅ Native implementation
-- **macOS**: ✅ Native implementation
-
-### ⚠️ Partial Support
-- **Web**: ✅ Works but requires `dart:js_util` (WASM compatibility needs work)
+- **iOS**: ✅ Native implementation, SPM manifest
+- **macOS**: ✅ Native implementation, SPM manifest
+- **Windows**: ✅ Platform implementation
+- **Linux**: ✅ Platform implementation
+- **Web**: ✅ JS-interop/WASM ready (uses pdf.js)
 
 ## Migration from Original Package
 
@@ -112,7 +113,7 @@ Users can migrate from the original `pdf_render` package by:
 1. **Update pubspec.yaml**:
    ```yaml
    dependencies:
-     pdf_render_maintained: ^1.5.1  # Instead of pdf_render: ^1.4.12
+     pdf_render_maintained: ^1.5.8  # Instead of pdf_render: ^1.4.12
    ```
 
 2. **Update imports**:

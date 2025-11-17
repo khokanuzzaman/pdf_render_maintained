@@ -1277,9 +1277,11 @@ class PdfViewerState extends State<PdfViewer>
 
   void _onWheelDelta(Offset delta) {
     final m = _controller.value.clone();
-    m.translate(
+    m.translateByDouble(
       -delta.dx * widget.params!.scrollByMouseWheel!,
       -delta.dy * widget.params!.scrollByMouseWheel!,
+      0,
+      1,
     );
     _controller.value = m;
   }

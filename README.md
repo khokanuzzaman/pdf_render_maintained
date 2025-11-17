@@ -13,10 +13,10 @@ This package is a **maintained fork** of the original [pdf_render](https://pub.d
 - ✅ **Updated dependencies** for modern Flutter versions
 - ✅ **Compatibility** with latest Flutter SDK (3.0+)
 - ✅ **Same API** - drop-in replacement for the original package
-- ✅ **All platforms** supported (iOS, Android, macOS, Web)
-- ✅ **WASM compatibility** improvements
+- ✅ **All platforms** supported (iOS, Android, macOS, Web, Windows, Linux)
+- ✅ **WASM compatibility** and JS-interop-safe bindings
 - ✅ **Gradle 8.11.1** support for modern Android builds
-- ✅ **Swift Package Manager** support for macOS
+- ✅ **Swift Package Manager** support for macOS and iOS
 - ✅ **Latest dependencies** (collection ^1.19.1, vector_math ^2.2.0)
 
 ### Original Package Attribution
@@ -44,16 +44,16 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  pdf_render_maintained: ^1.5.3
+  pdf_render_maintained: ^1.5.8
 ```
 
 Then run `flutter pub get`.
 
 ### Platform-Specific Setup
 
-#### macOS Swift Package Manager Support
+#### Swift Package Manager Support (macOS & iOS)
 
-This package includes full Swift Package Manager (SPM) support for macOS development:
+This package includes full Swift Package Manager (SPM) support for macOS and iOS development:
 
 - ✅ **Package.swift**: Complete SPM configuration
 - ✅ **Automatic Integration**: Flutter handles SPM integration automatically

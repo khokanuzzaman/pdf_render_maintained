@@ -1,6 +1,11 @@
+## 1.5.9 (Maintained Fork)
+
+- ✅ **Doc refresh**: README/PUBLISHING_GUIDE updates and final publish prep
+
 ## 1.5.8 (Maintained Fork)
 
 - ✅ **Publish prep**: Version bump and final adjustments for pub.dev release
+- ✅ **iOS SPM manifest**: Added `ios/pdf_render_maintained/Package.swift` for Swift Package Manager detection
 
 ## 1.5.7 (Maintained Fork)
 
