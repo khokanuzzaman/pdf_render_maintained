@@ -31,3 +31,7 @@ bool hasProperty(Object object, Object name) {
 Object get globalThis => throw UnsupportedError(
     'dart:js_util is not available on this platform');
 
+/// Stub implementation - should never be called
+T? callMethod<T>(Object object, String method, List<Object?> args) {
+  throw UnsupportedError('dart:js_util is not available on this platform');
+}

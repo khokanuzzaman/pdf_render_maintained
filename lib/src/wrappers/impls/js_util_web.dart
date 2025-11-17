@@ -1,6 +1,14 @@
 import 'dart:js_util' as js_util;
 
-export 'dart:js_util' show promiseToFuture, getProperty, setProperty, jsify, hasProperty, globalThis;
+export 'dart:js_util'
+    show
+        promiseToFuture,
+        getProperty,
+        setProperty,
+        jsify,
+        hasProperty,
+        globalThis,
+        callMethod;
 
 // Provide a namespace alias so callers can prefix-import as `js_util`. This
 // avoids breaking existing code that expects the members to be on the prefix.

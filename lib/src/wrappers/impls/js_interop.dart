@@ -36,3 +36,20 @@ Object jsify(Object object) {
   throw UnimplementedError('WASM implementation not yet complete. PDF rendering on WASM requires full dart:js_interop implementation.');
 }
 
+/// WASM-compatible wrapper for hasProperty
+bool hasProperty(Object object, Object name) {
+  // Implementation would use JS interop
+  throw UnimplementedError('WASM implementation not yet complete. PDF rendering on WASM requires full dart:js_interop implementation.');
+}
+
+/// WASM-compatible globalThis placeholder
+Object get globalThis {
+  // Implementation would use JS interop
+  throw UnimplementedError('WASM implementation not yet complete. PDF rendering on WASM requires full dart:js_interop implementation.');
+}
+
+/// WASM-compatible wrapper for callMethod
+T? callMethod<T>(Object object, String method, List<Object?> args) {
+  // Implementation would use JS interop
+  throw UnimplementedError('WASM implementation not yet complete. PDF rendering on WASM requires full dart:js_interop implementation.');
+}

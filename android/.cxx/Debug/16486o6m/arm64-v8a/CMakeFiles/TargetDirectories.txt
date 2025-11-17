@@ -1,3 +1,0 @@
-/Users/jotnosqh/Desktop/npm-packages/flutter_pdf_render/android/.cxx/Debug/16486o6m/arm64-v8a/CMakeFiles/bbhelper.dir
-/Users/jotnosqh/Desktop/npm-packages/flutter_pdf_render/android/.cxx/Debug/16486o6m/arm64-v8a/CMakeFiles/edit_cache.dir
-/Users/jotnosqh/Desktop/npm-packages/flutter_pdf_render/android/.cxx/Debug/16486o6m/arm64-v8a/CMakeFiles/rebuild_cache.dir

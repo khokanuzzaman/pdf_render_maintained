@@ -1,3 +1,9 @@
+## 1.5.7 (Maintained Fork)
+
+- ✅ **WASM-safe bindings**: Rewrote pdf.js interop to use `dart:js_util` helpers and platform-aware wrappers for wasm detection
+- ✅ **Dependency cleanup**: Removed discontinued `js` package and updated `web` to the latest stable line
+- ✅ **Publish prep**: Trimmed build artifacts and caches to reduce package size
+
 ## 1.5.6 (Maintained Fork)
 
 - ✅ **WASM Compatibility Improvements**: Added `package:web` dependency and WASM-compatible HTML wrapper implementation

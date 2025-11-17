@@ -1,147 +1,174 @@
-@JS()
-library pdfjs;
-
 import 'dart:typed_data';
 
-import 'package:js/js.dart';
-
-import '../wrappers/html.dart';
+import '../wrappers/html.dart' as html;
 import '../wrappers/js_util.dart' as js_util;
 
-@JS('pdfjsLib.getDocument')
-external _PDFDocumentLoadingTask _pdfjsGetDocument(dynamic data);
+Map<String, dynamic> _mergeOptions(
+  Map<String, dynamic> params,
+  Object? pdfRenderOptions,
+) {
+  final merged = <String, dynamic>{...params};
+  if (pdfRenderOptions != null) {
+    final cMapUrl = js_util.getProperty<Object?>(pdfRenderOptions, 'cMapUrl');
+    final cMapPacked =
+        js_util.getProperty<Object?>(pdfRenderOptions, 'cMapPacked');
+    if (cMapUrl != null) merged['cMapUrl'] = cMapUrl;
+    if (cMapPacked != null) merged['cMapPacked'] = cMapPacked;
 
-@JS('pdfRenderOptions')
-external Object _pdfRenderOptions;
-
-@JS()
-@anonymous
-class _PDFDocumentLoadingTask {
-  external Object get promise;
-}
-
-Map<String, dynamic> _getParams(Map<String, dynamic> jsParams) {
-  final params = {
-    'cMapUrl': js_util.getProperty(_pdfRenderOptions, 'cMapUrl'),
-    'cMapPacked': js_util.getProperty(_pdfRenderOptions, 'cMapPacked'),
-  }..addAll(jsParams);
-  final otherParams = js_util.getProperty(_pdfRenderOptions, 'params');
-  if (otherParams != null) {
-    params.addAll(otherParams as Map<String, dynamic>);
+    final otherParams =
+        js_util.getProperty<Object?>(pdfRenderOptions, 'params') as Map?;
+    if (otherParams != null) {
+      merged.addAll(otherParams.cast<String, dynamic>());
+    }
   }
-  return params;
+  return merged;
 }
 
-Future<PdfjsDocument> _pdfjsGetDocumentJsParams(Map<String, dynamic> jsParams) {
-  return js_util.promiseToFuture<PdfjsDocument>(
-      _pdfjsGetDocument(js_util.jsify(_getParams(jsParams))).promise);
+Future<PdfjsDocument> _loadDocument(Map<String, dynamic> params) async {
+  final pdfjsLib = js_util.getProperty<Object?>(html.window, 'pdfjsLib');
+  if (pdfjsLib == null) {
+    throw Exception('pdfjsLib not found. Ensure pdf.js is loaded on the page.');
+  }
+  final options = js_util.getProperty<Object?>(html.window, 'pdfRenderOptions');
+  final task = js_util.callMethod<Object>(
+        pdfjsLib,
+        'getDocument',
+        [js_util.jsify(_mergeOptions(params, options))],
+      ) ??
+      (throw Exception('pdfjsLib.getDocument returned null.'));
+  final promise = js_util.getProperty<Object?>(task, 'promise');
+  if (promise == null) {
+    throw Exception('pdfjsLib.getDocument returned an invalid task.');
+  }
+  final doc = await js_util.promiseToFuture<Object>(promise);
+  return PdfjsDocument(doc);
 }
 
 Future<PdfjsDocument> pdfjsGetDocument(String url) =>
-    _pdfjsGetDocumentJsParams({'url': url});
+    _loadDocument({'url': url});
 
 Future<PdfjsDocument> pdfjsGetDocumentFromData(ByteBuffer data) =>
-    _pdfjsGetDocumentJsParams({'data': data});
+    _loadDocument({'data': data});
 
-@JS()
 class PdfjsDocument {
-  external Object getPage(int pageNumber);
-  external int get numPages;
-  external void destroy();
+  PdfjsDocument(this._obj);
+  final Object _obj;
+
+  Object getPage(int pageNumber) =>
+      js_util.callMethod<Object>(_obj, 'getPage', [pageNumber])!;
+
+  int get numPages => js_util.getProperty<int>(_obj, 'numPages') ?? 0;
+
+  void destroy() => js_util.callMethod<void>(_obj, 'destroy', []);
 }
 
-@JS()
 class PdfjsPage {
-  external PdfjsViewport getViewport(PdfjsViewportParams params);
+  PdfjsPage(this._obj);
+  final Object _obj;
 
-  /// `viewport` for [PdfjsViewport] and `transform` for
-  external PdfjsRender render(PdfjsRenderContext params);
-  external int get pageNumber;
-  external List<double> get view;
+  PdfjsViewport getViewport(PdfjsViewportParams params) => PdfjsViewport(
+        js_util.callMethod<Object>(
+          _obj,
+          'getViewport',
+          [params.toJs()],
+        )!,
+      );
+
+  PdfjsRender render(PdfjsRenderContext params) => PdfjsRender(
+        js_util.callMethod<Object>(
+          _obj,
+          'render',
+          [params.toJs()],
+        )!,
+      );
+
+  int get pageNumber => js_util.getProperty<int>(_obj, 'pageNumber') ?? 0;
+
+  List<double> get view {
+    final raw = js_util.getProperty<Object?>(_obj, 'view');
+    if (raw is List) {
+      return raw.map((e) => (e as num).toDouble()).toList();
+    }
+    return const [];
+  }
 }
 
-@JS()
-@anonymous
 class PdfjsViewportParams {
-  external double get scale;
-  external set scale(double scale);
-  external int get rotation;
-  external set rotation(int rotation);
-  external double get offsetX;
-  external set offsetX(double offsetX);
-  external double get offsetY;
-  external set offsetY(double offsetY);
-  external bool get dontFlip;
-  external set dontFlip(bool dontFlip);
+  PdfjsViewportParams({
+    required this.scale,
+    this.rotation = 0,
+    this.offsetX = 0,
+    this.offsetY = 0,
+    this.dontFlip = false,
+  });
 
-  external factory PdfjsViewportParams(
-      {double scale,
-      int rotation, // 0, 90, 180, 270
-      double offsetX = 0,
-      double offsetY = 0,
-      bool dontFlip = false});
+  double scale;
+  int rotation;
+  double offsetX;
+  double offsetY;
+  bool dontFlip;
+
+  Object toJs() => js_util.jsify({
+        'scale': scale,
+        'rotation': rotation,
+        'offsetX': offsetX,
+        'offsetY': offsetY,
+        'dontFlip': dontFlip,
+      });
 }
 
-@JS()
 class PdfjsViewport {
-  external List<double> get viewBox;
-  external set viewBox(List<double> viewBox);
+  PdfjsViewport(this._obj);
+  final Object _obj;
 
-  external double get scale;
-  external set scale(double scale);
+  double get width => (js_util.getProperty<Object?>(_obj, 'width') as num?)?.toDouble() ?? 0;
+  double get height => (js_util.getProperty<Object?>(_obj, 'height') as num?)?.toDouble() ?? 0;
 
-  /// 0, 90, 180, 270
-  external int get rotation;
-  external set rotation(int rotation);
-  external double get offsetX;
-  external set offsetX(double offsetX);
-  external double get offsetY;
-  external set offsetY(double offsetY);
-  external bool get dontFlip;
-  external set dontFlip(bool dontFlip);
-
-  external double get width;
-  external set width(double w);
-  external double get height;
-  external set height(double h);
-
-  external List<double>? get transform;
-  external set transform(List<double>? m);
+  List<double>? get transform {
+    final raw = js_util.getProperty<Object?>(_obj, 'transform');
+    if (raw is List) {
+      return raw.map((e) => (e as num).toDouble()).toList();
+    }
+    return null;
+  }
 }
 
-@JS()
-@anonymous
 class PdfjsRenderContext {
-  external CanvasRenderingContext2D get canvasContext;
-  external set canvasContext(CanvasRenderingContext2D ctx);
-  external PdfjsViewport get viewport;
-  external set viewport(PdfjsViewport viewport);
-  external String get intent;
+  PdfjsRenderContext({
+    required this.canvasContext,
+    required this.viewport,
+    this.intent = 'display',
+    this.renderInteractiveForms = false,
+    this.transform,
+    this.imageLayer,
+    this.canvasFactory,
+    this.background,
+  });
 
-  /// `display` or `print`
-  external set intent(String intent);
-  external bool get renderInteractiveForms;
-  external set renderInteractiveForms(bool renderInteractiveForms);
-  external List<int>? get transform;
-  external set transform(List<int>? transform);
-  external dynamic get imageLayer;
-  external set imageLayer(dynamic imageLayer);
-  external dynamic get canvasFactory;
-  external set canvasFactory(dynamic canvasFactory);
-  external dynamic get background;
-  external set background(dynamic background);
-  external factory PdfjsRenderContext(
-      {required CanvasRenderingContext2D canvasContext,
-      required PdfjsViewport viewport,
-      String intent = 'display',
-      bool renderInteractiveForms = false,
-      List<double>? transform,
-      dynamic imageLayer,
-      dynamic canvasFactory,
-      dynamic background});
+  html.CanvasRenderingContext2D canvasContext;
+  PdfjsViewport viewport;
+  String intent;
+  bool renderInteractiveForms;
+  List<double>? transform;
+  dynamic imageLayer;
+  dynamic canvasFactory;
+  dynamic background;
+
+  Object toJs() => js_util.jsify({
+        'canvasContext': canvasContext,
+        'viewport': viewport._obj,
+        'intent': intent,
+        'renderInteractiveForms': renderInteractiveForms,
+        if (transform != null) 'transform': transform,
+        if (imageLayer != null) 'imageLayer': imageLayer,
+        if (canvasFactory != null) 'canvasFactory': canvasFactory,
+        if (background != null) 'background': background,
+      });
 }
 
-@JS()
 class PdfjsRender {
-  external Future<void> get promise;
+  PdfjsRender(this._obj);
+  final Object _obj;
+
+  Object get promise => js_util.getProperty<Object>(_obj, 'promise')!;
 }
