@@ -27,13 +27,23 @@ This package is based on the original work by [espresso3389](https://github.com/
 **Original Package**: https://pub.dev/packages/pdf_render  
 **Original Author**: [espresso3389](https://github.com/espresso3389)
 
+## 🚀 What's New – 1-Line Viewer API (unreleased)
+
+The maintained fork now ships with a brand-new high-level widget layer:
+
+- **`PdfRenderView`** – four factories (`.asset`, `.file`, `.network`, `.memory`) that directly wrap the existing `PdfViewer.open*` methods. Drop it in as a single line.
+- **`PdfRenderScreen`** – a batteries-included `Scaffold` with an `AppBar` and safe-area body so you can push a ready-to-use screen with `Navigator.push`.
+- **`pdf_render_maintained.dart` barrel export** – import this single file to get both the classic low-level APIs and the new convenience widgets.
+
+These additions are 100% additive; no existing API (such as `PdfDocumentLoader`, `PdfPageView`, or `PdfViewer`) was modified or removed.
+
 ## Features
 
-- 📱 **Multi-platform support**: iOS, Android, macOS, and Web
-- 🎨 **Easy-to-use widgets**: `PdfViewer`, `PdfDocumentLoader`, `PdfPageView`
+- 📱 **Multi-platform support**: iOS, Android, macOS, Web, Windows, and Linux
+- 🎨 **Widgets from low-level to high-level**: `PdfViewer`, `PdfDocumentLoader`, `PdfPageView`, and now `PdfRenderView`/`PdfRenderScreen`
 - ⚡ **High-performance rendering**: Direct texture rendering for smooth performance
-- 🔧 **Flexible APIs**: Both widget-based and low-level rendering APIs
-- 📄 **Multiple sources**: Load from assets, files, or memory data
+- 🔧 **Flexible APIs**: Pick between low-level composition or one-line high-level widgets
+- 📄 **Multiple sources**: Load from assets, files, URLs, or memory
 - 🎯 **Interactive viewing**: Pinch-zoom, pan, and navigation controls
 - 🍎 **Swift Package Manager**: Full SPM support for macOS development
 - 🏗️ **Modern Build Tools**: Gradle 8.11.1, latest dependencies
@@ -44,7 +54,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  pdf_render_maintained: ^1.5.10
+  pdf_render_maintained: ^1.6.0
 ```
 
 Then run `flutter pub get`.
@@ -97,7 +107,38 @@ For Web support, add the following script tags to your `index.html` before the m
 </script>
 ```
 
+## Screenshots
+
+![PdfRenderView demo showing vertical scrolling](images/layoutPages.gif)
+![Render parameters diagram](images/render-params.png)
+
 ## Quick Start
+
+### 1-Line Setup
+
+```dart
+import 'package:pdf_render_maintained/pdf_render_maintained.dart';
+
+const PdfRenderView.asset('assets/hello.pdf');
+const PdfRenderView.network('https://example.com/doc.pdf');
+```
+
+### Batteries-Included Screen
+
+```dart
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => PdfRenderScreen.network(
+      'https://example.com/doc.pdf',
+      title: 'PDF Preview',
+      params: const PdfViewerParams(padding: 12),
+    ),
+  ),
+);
+```
+
+`PdfRenderScreen.*` is perfect for when you want a default `AppBar` + viewer body without assembling a full screen manually. It still accepts the same `PdfViewerParams` and can be customized further by wrapping with your own widgets if needed.
 
 ### Simple PDF Viewer
 
@@ -162,6 +203,8 @@ class _MyPdfViewerState extends State<MyPdfViewer> {
 
 ### Widgets
 
+- **`PdfRenderView`** *(new)*: Stateless convenience widget with `.asset`, `.file`, `.network`, and `.memory` factories
+- **`PdfRenderScreen`** *(new)*: Ready-made `Scaffold` that wraps a `PdfRenderView`
 - **`PdfViewer`**: Full-featured PDF viewer with zoom, pan, and navigation
 - **`PdfDocumentLoader`**: Loads and manages PDF documents
 - **`PdfPageView`**: Renders individual PDF pages
@@ -191,7 +234,7 @@ And update your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  pdf_render_maintained: ^1.5.10  # Instead of pdf_render: ^1.4.12
+  pdf_render_maintained: ^1.6.0  # Instead of pdf_render: ^1.4.12
 ```
 
 ## Contributing

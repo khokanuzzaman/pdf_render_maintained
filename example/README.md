@@ -1,18 +1,19 @@
 # pdf_render_maintained_example
 
-Demonstrates how to use the pdf_render_maintained plugin.
+This sample demonstrates **both** the new one-line API (`PdfRenderView` / `PdfRenderScreen`) and the classic advanced widgets (`PdfViewer`, `PdfDocumentLoader`, etc.).
 
-This example is part of the maintained fork of the original pdf_render package by espresso3389.
+## Demos Included
 
-## Getting Started
+- **1-Line Setup** – tap any of the first tiles to see how `PdfRenderScreen.asset`, `.network`, or `.memory` instantly renders a document.
+- **Advanced APIs** – launch the "Controller-driven viewer" tile to inspect the original `PdfViewer.openAsset/openFutureFile` flow with custom gestures, scroll indicator, and manual controller access.
 
-This project is a starting point for a Flutter application.
+## Running the Example
 
-A few resources to get you started if this is your first Flutter project:
+From the repository root:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```bash
+cd example
+flutter run -d <device-id>
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The project requires the same platform setup described in the main README (Flutter 3.0+, platform SDK tooling, and for web the `pdfjs` script tags).

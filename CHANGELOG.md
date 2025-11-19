@@ -1,3 +1,9 @@
+## 1.6.0 (Maintained Fork)
+
+- ✨ **1-Line viewer API**: Added `PdfRenderView` with `.asset`, `.file`, `.network`, and `.memory` constructors that wrap the existing `PdfViewer.open*` factories without breaking changes.
+- 🧭 **Batteries-included screen**: Introduced `PdfRenderScreen.*` helpers so developers can push a ready-to-use viewer page with a single line.
+- 📘 **Docs & examples**: README now highlights the new API, `example` app showcases both the convenience and advanced flows, and `pdf_render_maintained.dart` exports the new widgets for easy imports.
+
 ## 1.5.10 (Maintained Fork)
 
 - ✅ **Doc & release bump**: Updated docs and package version for publishing
