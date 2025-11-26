@@ -1,4 +1,8 @@
 # Exclude heavyweight or generated artifacts from the published package
+build/
+.dart_tool/
+macos/Flutter/ephemeral/
+ios/Flutter/ephemeral/
 example/build/
 example/.dart_tool/
 example/android/.gradle/
