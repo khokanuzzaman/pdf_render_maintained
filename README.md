@@ -27,7 +27,7 @@ This package is based on the original work by [espresso3389](https://github.com/
 **Original Package**: https://pub.dev/packages/pdf_render  
 **Original Author**: [espresso3389](https://github.com/espresso3389)
 
-## 🚀 What's New – 1-Line Viewer API (unreleased)
+## 🚀 What's New – 1-Line Viewer API (1.6.x)
 
 The maintained fork now ships with a brand-new high-level widget layer:
 
@@ -54,7 +54,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  pdf_render_maintained: ^1.6.0
+  pdf_render_maintained: ^1.6.1
 ```
 
 Then run `flutter pub get`.
@@ -84,7 +84,7 @@ The package supports modern Android development with:
 
 Standard iOS development with:
 - ✅ **Swift Support**: Full Swift compatibility
-- ✅ **iOS 10.0+**: Wide device compatibility
+- ✅ **iOS 13.0+**: Aligned with current Flutter minimums
 - ✅ **Automatic Integration**: No additional setup required
 
 ### Web Setup
@@ -109,6 +109,7 @@ For Web support, add the following script tags to your `index.html` before the m
 
 ## Screenshots
 
+![iOS asset viewer](images/ios-screenshot.png)
 ![PdfRenderView demo showing vertical scrolling](images/layoutPages.gif)
 ![Render parameters diagram](images/render-params.png)
 
@@ -234,7 +235,7 @@ And update your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  pdf_render_maintained: ^1.6.0  # Instead of pdf_render: ^1.4.12
+  pdf_render_maintained: ^1.6.1  # Instead of pdf_render: ^1.4.12
 ```
 
 ## Contributing

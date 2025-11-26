@@ -71,7 +71,7 @@ After publishing, verify:
 
 ### Package Details
 - **Name**: `pdf_render_maintained`
-- **Version**: `1.6.0`
+- **Version**: `1.6.1`
 - **Description**: A maintained fork of pdf_render plugin providing PDF rendering APIs and Flutter widgets for iOS, Android, macOS, Web, Windows, and Linux.
 - **Homepage**: https://github.com/khokanuzzman/pdf_render_maintained
 - **Repository**: https://github.com/khokanuzzman/pdf_render_maintained
@@ -113,7 +113,7 @@ Users can migrate from the original `pdf_render` package by:
 1. **Update pubspec.yaml**:
    ```yaml
    dependencies:
-     pdf_render_maintained: ^1.6.0  # Instead of pdf_render: ^1.4.12
+     pdf_render_maintained: ^1.6.1  # Instead of pdf_render: ^1.4.12
    ```
 
 2. **Update imports**:

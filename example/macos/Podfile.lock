@@ -1,43 +1,36 @@
 PODS:
   - FlutterMacOS (1.0.0)
-  - FMDB (2.7.5):
-    - FMDB/standard (= 2.7.5)
-  - FMDB/standard (2.7.5)
-  - path_provider_macos (0.0.1):
+  - path_provider_foundation (0.0.1):
+    - Flutter
     - FlutterMacOS
-  - pdf_render (0.0.1):
+  - pdf_render_maintained (1.6.1):
     - FlutterMacOS
-  - sqflite (0.0.2):
+  - sqflite_darwin (0.0.4):
+    - Flutter
     - FlutterMacOS
-    - FMDB (>= 2.7.5)
 
 DEPENDENCIES:
   - FlutterMacOS (from `Flutter/ephemeral`)
-  - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
-  - pdf_render (from `Flutter/ephemeral/.symlinks/plugins/pdf_render/macos`)
-  - sqflite (from `Flutter/ephemeral/.symlinks/plugins/sqflite/macos`)
-
-SPEC REPOS:
-  trunk:
-    - FMDB
+  - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
+  - pdf_render_maintained (from `Flutter/ephemeral/.symlinks/plugins/pdf_render_maintained/macos`)
+  - sqflite_darwin (from `Flutter/ephemeral/.symlinks/plugins/sqflite_darwin/darwin`)
 
 EXTERNAL SOURCES:
   FlutterMacOS:
     :path: Flutter/ephemeral
-  path_provider_macos:
-    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
-  pdf_render:
-    :path: Flutter/ephemeral/.symlinks/plugins/pdf_render/macos
-  sqflite:
-    :path: Flutter/ephemeral/.symlinks/plugins/sqflite/macos
+  path_provider_foundation:
+    :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
+  pdf_render_maintained:
+    :path: Flutter/ephemeral/.symlinks/plugins/pdf_render_maintained/macos
+  sqflite_darwin:
+    :path: Flutter/ephemeral/.symlinks/plugins/sqflite_darwin/darwin
 
 SPEC CHECKSUMS:
-  FlutterMacOS: 85f90bfb3f1703249cf1539e4dfbff31e8584698
-  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  path_provider_macos: 3c0c3b4b0d4a76d2bf989a913c2de869c5641a19
-  pdf_render: c2c4dfbd5cdb621c4f734018e52ab4546f08f3a1
-  sqflite: a5789cceda41d54d23f31d6de539d65bb14100ea
+  FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
+  path_provider_foundation: 0b743cbb62d8e47eab856f09262bb8c1ddcfe6ba
+  pdf_render_maintained: 7197e7cc0377ff55e5fa47a401465d7913a3c6aa
+  sqflite_darwin: 5a7236e3b501866c1c9befc6771dfd73ffb8702d
 
-PODFILE CHECKSUM: a884f6dd3f7494f3892ee6c81feea3a3abbf9153
+PODFILE CHECKSUM: 0d3963a09fc94f580682bd88480486da345dc3f0
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

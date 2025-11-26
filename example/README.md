@@ -17,3 +17,8 @@ flutter run -d <device-id>
 ```
 
 The project requires the same platform setup described in the main README (Flutter 3.0+, platform SDK tooling, and for web the `pdfjs` script tags).
+
+## Notes
+
+- The plugin now targets iOS 13.0+; ensure your simulator/device meets this minimum.
+- For automated captures (e.g., docs screenshots), you can launch with `--dart-define=AUTO_SHOW_ASSET_VIEW=true` to auto-open the asset viewer.

@@ -25,11 +25,44 @@ class PdfRenderExampleApp extends StatelessWidget {
   }
 }
 
-class ExampleHome extends StatelessWidget {
+class ExampleHome extends StatefulWidget {
   const ExampleHome({super.key});
 
   static const _samplePdfUrl =
       'https://github.com/espresso3389/flutter_pdf_render/raw/master/example/assets/hello.pdf';
+
+  @override
+  State<ExampleHome> createState() => _ExampleHomeState();
+}
+
+class _ExampleHomeState extends State<ExampleHome> {
+  static const _autoShowAsset = bool.fromEnvironment('AUTO_SHOW_ASSET_VIEW');
+  bool _didAutoShow = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_autoShowAsset && !_didAutoShow) {
+      _didAutoShow = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        _openAsset(context);
+      });
+    }
+  }
+
+  void _openAsset(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PdfRenderScreen.asset(
+          'assets/hello.pdf',
+          title: 'Asset PDF',
+          params: const PdfViewerParams(padding: 12, minScale: 1.0),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +81,7 @@ class ExampleHome extends StatelessWidget {
             icon: Icons.insert_drive_file,
             title: 'Asset viewer',
             subtitle: 'const PdfRenderView.asset(...)',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => PdfRenderScreen.asset(
-                  'assets/hello.pdf',
-                  title: 'Asset PDF',
-                  params: const PdfViewerParams(padding: 12, minScale: 1.0),
-                ),
-              ),
-            ),
+            onTap: () => _openAsset(context),
           ),
           _DemoTile(
             icon: Icons.cloud_download,
@@ -67,7 +91,7 @@ class ExampleHome extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (_) => PdfRenderScreen.network(
-                  _samplePdfUrl,
+                  ExampleHome._samplePdfUrl,
                   title: 'Network PDF',
                   params: const PdfViewerParams(padding: 12, minScale: 1.0),
                 ),

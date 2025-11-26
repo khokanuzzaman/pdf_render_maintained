@@ -4,7 +4,8 @@ import PackageDescription
 let package = Package(
     name: "pdf_render_maintained",
     platforms: [
-        .iOS(.v11)
+        // Match Flutter minimum iOS target.
+        .iOS(.v13)
     ],
     products: [
         .library(

@@ -1,3 +1,9 @@
+## 1.6.1 (Maintained Fork)
+
+- 🛠️ **iOS/macOS alignment**: Raised iOS minimum to 13 and fixed the Swift bridge import so Xcode builds succeed with the renamed plugin.
+- 🖼️ **Docs refresh**: Added an up-to-date iOS screenshot and refreshed README/PUBLISHING_GUIDE for pub.dev/GitHub.
+- 🔖 **Version bump**: Published as 1.6.1.
+
 ## 1.6.0 (Maintained Fork)
 
 - ✨ **1-Line viewer API**: Added `PdfRenderView` with `.asset`, `.file`, `.network`, and `.memory` constructors that wrap the existing `PdfViewer.open*` factories without breaking changes.
