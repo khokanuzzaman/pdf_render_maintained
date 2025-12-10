@@ -2,6 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/pdf_render_maintained.svg)](https://pub.dev/packages/pdf_render_maintained)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-FFDD00?logo=buymeacoffee&logoColor=000000)](https://buymeacoffee.com/khokanuzzaman)
 
 A maintained fork of the original `pdf_render` plugin that provides intermediate PDF rendering APIs and easy-to-use Flutter Widgets. This package is inspired by and based on the excellent work by [espresso3389](https://github.com/espresso3389).
 
@@ -237,6 +238,12 @@ And update your `pubspec.yaml`:
 dependencies:
   pdf_render_maintained: ^1.6.1  # Instead of pdf_render: ^1.4.12
 ```
+
+## Support
+
+If this package saves you time, consider buying the maintainer a coffee:
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-donate-FFDD00?logo=buymeacoffee&logoColor=000000)](https://buymeacoffee.com/khokanuzzaman)
 
 ## Contributing
 
