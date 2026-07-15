@@ -1,5 +1,6 @@
 # pdf_render_maintained
 
+[![CI](https://github.com/khokanuzzaman/pdf_render_maintained/actions/workflows/ci.yml/badge.svg)](https://github.com/khokanuzzaman/pdf_render_maintained/actions/workflows/ci.yml)
 [![pub package](https://img.shields.io/pub/v/pdf_render_maintained.svg)](https://pub.dev/packages/pdf_render_maintained)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support-FFDD00?logo=buymeacoffee&logoColor=000000)](https://buymeacoffee.com/khokanuzzaman)
