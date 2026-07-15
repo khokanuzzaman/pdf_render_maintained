@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 Bindings that expose fast PDF page rendering APIs and widgets for Flutter.
   DESC
-  s.homepage         = 'https://github.com/khokanuzzman/pdf_render_maintained'
+  s.homepage         = 'https://github.com/khokanuzzaman/pdf_render_maintained'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'pdf_render_maintained authors' => 'maintainers@pdf-render-maintained.local' }
   s.source           = { :path => '.' }
