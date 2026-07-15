@@ -1,3 +1,8 @@
+## 1.6.2 (Maintained Fork)
+
+- 🍎 **Fixed iOS/macOS Swift Package Manager builds**: Updated `ios/macos` `Package.swift` to Flutter 3.44's plugin conventions — the SPM library product is now `pdf-render-maintained` (hyphenated, as the Flutter tool expects) and the target declares the required `FlutterFramework` dependency. Previously `flutter build ios`/`macos` failed with "product 'pdf-render-maintained' … not found" when Swift Package Manager was enabled (the default on Flutter 3.44).
+- 🐛 **Fixed iOS plugin registration**: The iOS `pluginClass` in `pubspec.yaml` referenced `PdfRenderPlugin` while the Swift class is `SwiftPdfRenderPlugin`, causing "Unknown receiver 'PdfRenderPlugin'" under SPM. Aligned it with the actual class (and the macOS entry). Verified building under both Swift Package Manager and CocoaPods.
+
 ## 1.6.1 (Maintained Fork)
 
 - 🛠️ **iOS/macOS alignment**: Raised iOS minimum to 13 and fixed the Swift bridge import so Xcode builds succeed with the renamed plugin.

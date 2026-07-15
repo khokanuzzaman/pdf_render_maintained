@@ -7,18 +7,24 @@ let package = Package(
         .macOS(.v10_15)
     ],
     products: [
+        // The Flutter tool references the product by the plugin name with
+        // underscores replaced by hyphens; the target keeps the underscored name.
         .library(
-            name: "pdf_render_maintained",
+            name: "pdf-render-maintained",
             targets: ["pdf_render_maintained"]
         ),
     ],
     dependencies: [
-        // Add any dependencies here if needed
+        // Required by Flutter's Swift Package Manager integration so the plugin
+        // target can `import Flutter` / `import FlutterMacOS`.
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
     ],
     targets: [
         .target(
             name: "pdf_render_maintained",
-            dependencies: [],
+            dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
+            ],
             path: "Sources"
         ),
     ]
