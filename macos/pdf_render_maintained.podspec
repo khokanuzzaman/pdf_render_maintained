@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'pdf_render_maintained'
-  s.version          = '1.6.1'
+  s.version          = '1.6.2'
   s.summary          = 'PDF rendering plugin for Flutter (maintained fork).'
   s.description      = <<-DESC
 Bindings that expose fast PDF page rendering APIs and widgets for Flutter.
