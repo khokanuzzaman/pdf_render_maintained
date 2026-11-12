@@ -1,3 +1,7 @@
+## Unreleased
+
+- 🤖 **Android 16 KB page-size support**: the `bbhelper` native library is now linked with `-Wl,-z,max-page-size=16384` and built with `-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON`, so the plugin loads on 16 KB-page devices and passes Google Play's 16 KB requirement regardless of NDK version.
+
 ## 1.6.2 (Maintained Fork)
 
 - 🍎 **Fixed iOS/macOS Swift Package Manager builds**: Updated `ios/macos` `Package.swift` to Flutter 3.44's plugin conventions — the SPM library product is now `pdf-render-maintained` (hyphenated, as the Flutter tool expects) and the target declares the required `FlutterFramework` dependency. Previously `flutter build ios`/`macos` failed with "product 'pdf-render-maintained' … not found" when Swift Package Manager was enabled (the default on Flutter 3.44).
